@@ -1,29 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Swap Rank and Name (Conditional)</title>
+  <title>Swap Rank/Name</title>
   <style>
-    textarea, input, button { width: 100%; margin: 6px 0; padding: 8px; font-family: monospace; }
+    body { font-family: sans-serif; padding: 20px; background-color: #f9f9f9; }
+    textarea, input, button {
+      width: 100%;
+      margin: 6px 0;
+      padding: 8px;
+      font-family: monospace;
+    }
     textarea { height: 160px; }
-    label { display: block; margin-top: 10px; }
+    .inline-label { display: flex; align-items: center; margin-top: 10px; }
+    .inline-label input[type="checkbox"] { margin-right: 10px; width: auto; }
   </style>
 </head>
 <body>
-
-  <h3>Input JSON (array)</h3>
-  <textarea id="inputData">
-    []
-  </textarea>
-
-  <input type="text" id="key1" value="" placeholder="First key to swap">
-  <input type="text" id="key2" value="" placeholder="Second key to swap">
-
-  <label><input type="checkbox" id="conditionalSwap"> Swap only if one of the two values is empty</label>
-
+  <h1>Swap Rank and Name</h1>
+  <textarea id="inputData">[
+  {
+    "Rank": "N/A",
+    "Name": "Honor",
+    "Description": "",
+    "Cost": "",
+    "Book": "Elodoth"
+  }
+]</textarea>
+  <input type="text" id="key1" value="Rank" placeholder="First key to swap">
+  <input type="text" id="key2" value="Name" placeholder="Second key to swap">
+  <div class="inline-label">
+    <input type="checkbox" id="conditionalSwap">
+    <label for="conditionalSwap">Swap only if one of the two values is empty</label>
+  </div>
   <button onclick="swapKeys()">Swap Keys</button>
-
-  <h3>Output JSON</h3>
   <textarea id="outputData" readonly></textarea>
   <button onclick="copyOutput()">Copy Output</button>
 
@@ -48,7 +58,6 @@
             item[key1] = val2;
             item[key2] = temp;
           }
-
           return item;
         });
 
