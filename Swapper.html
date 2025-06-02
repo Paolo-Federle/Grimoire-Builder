@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Swap Rank and Name (Conditional)</title>
+  <style>
+    textarea, input, button { width: 100%; margin: 6px 0; padding: 8px; font-family: monospace; }
+    textarea { height: 160px; }
+    label { display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h3>Input JSON (array)</h3>
+  <textarea id="inputData">
+    []
+  </textarea>
+
+  <input type="text" id="key1" value="" placeholder="First key to swap">
+  <input type="text" id="key2" value="" placeholder="Second key to swap">
+
+  <label><input type="checkbox" id="conditionalSwap"> Swap only if one of the two values is empty</label>
+
+  <button onclick="swapKeys()">Swap Keys</button>
+
+  <h3>Output JSON</h3>
+  <textarea id="outputData" readonly></textarea>
+  <button onclick="copyOutput()">Copy Output</button>
+
+  <script>
+    function isEmpty(val) {
+      return val === "" || val === undefined || val === null;
+    }
+
+    function swapKeys() {
+      try {
+        const key1 = document.getElementById('key1').value;
+        const key2 = document.getElementById('key2').value;
+        const input = JSON.parse(document.getElementById('inputData').value);
+        const condition = document.getElementById('conditionalSwap').checked;
+
+        const output = input.map(item => {
+          const val1 = item[key1];
+          const val2 = item[key2];
+
+          if (!condition || isEmpty(val1) || isEmpty(val2)) {
+            const temp = val1;
+            item[key1] = val2;
+            item[key2] = temp;
+          }
+
+          return item;
+        });
+
+        document.getElementById('outputData').value = JSON.stringify(output, null, 2);
+      } catch (e) {
+        alert('Errore nel parsing del JSON: ' + e.message);
+      }
+    }
+
+    function copyOutput() {
+      const out = document.getElementById("outputData");
+      out.select();
+      document.execCommand("copy");
+    }
+  </script>
+</body>
+</html>
